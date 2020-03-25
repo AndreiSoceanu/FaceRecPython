@@ -3,3 +3,5 @@
 /TrainData/*.txt
 /Data/*.txt
 /venv/*
+/GUI/nbproject/private/
+/GUI/build/
