@@ -1,0 +1,5 @@
+*.txt
+../*.txt
+/TrainData/*.txt
+/Data/*.txt
+/venv/*
