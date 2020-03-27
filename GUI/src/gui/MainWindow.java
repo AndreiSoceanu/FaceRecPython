@@ -1,24 +1,28 @@
 package gui;
 
-//import java.awt.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author andrei
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    Set<String> nameSet = new HashSet<>();
+    File file = new File("../ConfigData/persons.data");
     /**
      * Creates new form MainWindow
      */
-    private Map<String, Integer> DB_name_int;
+    
     public MainWindow() {
         initComponents();
-        DB_name_int = new HashMap<>();
+        updateSet();
+        
     }
 
     /**
@@ -68,6 +72,11 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setText("MESSAGES FROM THE APPLICATION");
 
         clrChat.setText("CLEAR MESSAGEBOX");
+        clrChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clrChatMouseClicked(evt);
+            }
+        });
 
         reset.setText("RESET APPLICATION");
 
@@ -148,6 +157,10 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_addNewPersonButtonMouseClicked
 
+    private void clrChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clrChatMouseClicked
+        chat.setText("");
+    }//GEN-LAST:event_clrChatMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -176,11 +189,8 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-                
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainWindow().setVisible(true);
         });
     }
 
@@ -198,4 +208,19 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField removeTextField;
     private javax.swing.JButton reset;
     // End of variables declaration//GEN-END:variables
+
+    private void updateSet() {
+        try {
+            Scanner scan = new Scanner(file);
+            int n = Integer.parseInt(scan.nextLine());
+            for(int i = 0; i < n; i++){
+                nameSet.add(scan.nextLine());
+            }
+        } catch (FileNotFoundException ex) {
+            String msg = chat.getText();
+            msg += "\nCould not read info.data!\n";
+            chat.setText(msg);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
