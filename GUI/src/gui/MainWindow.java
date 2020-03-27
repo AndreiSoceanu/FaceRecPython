@@ -1,7 +1,12 @@
 package gui;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -55,6 +60,11 @@ public class MainWindow extends javax.swing.JFrame {
         addNewPersonButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addNewPersonButtonMouseClicked(evt);
+            }
+        });
+        addNewPersonButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewPersonButtonActionPerformed(evt);
             }
         });
 
@@ -153,13 +163,39 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewPersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addNewPersonButtonMouseClicked
-        
-        
+        String name = addTextField.getText().replace(" ", "");
+        if(nameSet.contains(name)){
+           String msg = chat.getText();
+           msg += "Label " + name + " already exists! Routine interrupted!\n";
+           chat.setText(msg);
+        }
+        nameSet.add(name);
+        int size = nameSet.size();
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            StringBuilder str = new StringBuilder();
+            str.append(Integer.toString(size));
+            str.append('\n');
+            nameSet.stream().map((x) -> {
+                str.append(x);
+                return x;
+            }).forEachOrdered((_item) -> {
+                str.append('\n');
+            });
+            fos.write(str.toString().getBytes());
+            addTextField.setText("");
+            // TODO: addPerson pythonScript
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_addNewPersonButtonMouseClicked
 
     private void clrChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clrChatMouseClicked
         chat.setText("");
     }//GEN-LAST:event_clrChatMouseClicked
+
+    private void addNewPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewPersonButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addNewPersonButtonActionPerformed
 
     /**
      * @param args the command line arguments

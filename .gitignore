@@ -1,8 +1,9 @@
 *.txt
 /*.txt
-/TrainData/*.txt
-/Data/*.txt
+/TrainData/*
 /venv/*
 /GUI/nbproject/private/
 /GUI/build/
 /GUI/dist/
+/ConfigData/*.data
+/*.data
