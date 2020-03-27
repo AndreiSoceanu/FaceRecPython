@@ -10,7 +10,7 @@ video_capture.set(cv2.CAP_PROP_FPS, 60)
 
 [faceCenter, faceLeft, faceRight, faceUp, faceDown] = [False, False, False, False, False]
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("../Data/shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor("../ConfigData/shape_predictor_68_face_landmarks.dat")
 counter = 0
 t = 0
 done = False

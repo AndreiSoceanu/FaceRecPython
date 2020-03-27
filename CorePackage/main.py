@@ -1,6 +1,6 @@
 import cv2
 
-cascPath = "../Data/haarcascade_frontalface_default.xml"
+cascPath = "../ConfigData/haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 video_capture = cv2.VideoCapture(0)
