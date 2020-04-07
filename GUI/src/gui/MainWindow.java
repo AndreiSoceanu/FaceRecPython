@@ -11,6 +11,7 @@ import java.io.RandomAccessFile;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    Set<String> nameSet = new HashSet<>();
+    Set<String> nameSet = new TreeSet<>();
     File file = new File("../ConfigData/persons.data");
 
     /**
@@ -81,6 +82,11 @@ public class MainWindow extends javax.swing.JFrame {
         jButton1.setText("(RE) TRAIN NEURAL NETWORK");
 
         listDatabaseButton.setText("LIST DATABASE");
+        listDatabaseButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listDatabaseButtonMouseClicked(evt);
+            }
+        });
 
         chat.setEditable(false);
         chat.setColumns(20);
@@ -171,12 +177,16 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addNewPersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addNewPersonButtonMouseClicked
+        
         String name = addTextField.getText().replace(" ", "");
+        if(name.equals("")) return;
         if (nameSet.contains(name)) {
             String msg = chat.getText();
             msg += "Label " + name + " already exists! Routine interrupted!\n";
             chat.setText(msg);
+            return;
         }
+        
         nameSet.add(name);
         int size = nameSet.size();
         try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -213,11 +223,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void removePersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removePersonButtonMouseClicked
         String name = this.removeTextField.getText().replaceAll(" ", "");
+        if(name.equals("")) return;
         if (!nameSet.contains(name)) {
             chat.setText(chat.getText() + "Label "+name + " does not exist. Nothing removed.\n");
             this.removeTextField.setText("");
             return;
         }
+        
         nameSet.remove(name);
         int size = nameSet.size();
         try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -243,6 +255,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
         chat.setText(chat.getText()+"Removed " + name + " from database.\n");
     }//GEN-LAST:event_removePersonButtonMouseClicked
+
+    private void listDatabaseButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabaseButtonMouseClicked
+        String list = "=======\nDatabase:\n";
+        list = nameSet.stream().map((name) -> name + "\n").reduce(list, String::concat);
+        chat.setText(chat.getText()+list);
+    }//GEN-LAST:event_listDatabaseButtonMouseClicked
 
     /**
      * @param args the command line arguments
