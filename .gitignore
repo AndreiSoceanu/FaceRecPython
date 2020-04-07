@@ -7,3 +7,5 @@
 /GUI/dist/
 /ConfigData/*.data
 /*.data
+/ConfigData/persons.data
+
