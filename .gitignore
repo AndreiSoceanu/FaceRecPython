@@ -1,6 +1,6 @@
 *.txt
 /*.txt
-/TrainData/*
+/TrainBase/*
 /venv/*
 /GUI/nbproject/private/
 /GUI/build/

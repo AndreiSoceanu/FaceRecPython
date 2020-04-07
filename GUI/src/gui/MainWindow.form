@@ -127,6 +127,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="REMOVE PERSON(S) FROM DATABASE"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="removePersonButtonMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

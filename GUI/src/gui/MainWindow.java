@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -18,16 +19,18 @@ import java.util.logging.Logger;
  * @author andrei
  */
 public class MainWindow extends javax.swing.JFrame {
+
     Set<String> nameSet = new HashSet<>();
     File file = new File("../ConfigData/persons.data");
+
     /**
      * Creates new form MainWindow
      */
-    
+
     public MainWindow() {
         initComponents();
         updateSet();
-        
+
     }
 
     /**
@@ -69,6 +72,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         removePersonButton.setText("REMOVE PERSON(S) FROM DATABASE");
+        removePersonButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removePersonButtonMouseClicked(evt);
+            }
+        });
 
         jButton1.setText("(RE) TRAIN NEURAL NETWORK");
 
@@ -164,10 +172,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void addNewPersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addNewPersonButtonMouseClicked
         String name = addTextField.getText().replace(" ", "");
-        if(nameSet.contains(name)){
-           String msg = chat.getText();
-           msg += "Label " + name + " already exists! Routine interrupted!\n";
-           chat.setText(msg);
+        if (nameSet.contains(name)) {
+            String msg = chat.getText();
+            msg += "Label " + name + " already exists! Routine interrupted!\n";
+            chat.setText(msg);
         }
         nameSet.add(name);
         int size = nameSet.size();
@@ -183,7 +191,13 @@ public class MainWindow extends javax.swing.JFrame {
             });
             fos.write(str.toString().getBytes());
             addTextField.setText("");
-            // TODO: addPerson pythonScript
+            String cmd = "python ../CorePackage/newPerson.py " + name;
+            Process p = Runtime.getRuntime().exec(cmd);
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String ret = in.readLine();
+            if (ret.equalsIgnoreCase("Done")) {
+                this.chat.setText(this.chat.getText() + "Added " + name + " in the database.\n");
+            }
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -196,6 +210,39 @@ public class MainWindow extends javax.swing.JFrame {
     private void addNewPersonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewPersonButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addNewPersonButtonActionPerformed
+
+    private void removePersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removePersonButtonMouseClicked
+        String name = this.removeTextField.getText().replaceAll(" ", "");
+        if (!nameSet.contains(name)) {
+            chat.setText(chat.getText() + "Label "+name + " does not exist. Nothing removed.\n");
+            this.removeTextField.setText("");
+            return;
+        }
+        nameSet.remove(name);
+        int size = nameSet.size();
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            StringBuilder str = new StringBuilder();
+            str.append(Integer.toString(size));
+            str.append('\n');
+            nameSet.stream().map((x) -> {
+                str.append(x);
+                return x;
+            }).forEachOrdered((_item) -> {
+                str.append('\n');
+            });
+            fos.write(str.toString().getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        removeTextField.setText("");
+        String cmd = "rm -rf ../TrainBase/" + name;
+        try {
+            Process p = Runtime.getRuntime().exec(cmd);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        chat.setText(chat.getText()+"Removed " + name + " from database.\n");
+    }//GEN-LAST:event_removePersonButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -249,7 +296,7 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             Scanner scan = new Scanner(file);
             int n = Integer.parseInt(scan.nextLine());
-            for(int i = 0; i < n; i++){
+            for (int i = 0; i < n; i++) {
                 nameSet.add(scan.nextLine());
             }
         } catch (FileNotFoundException ex) {
