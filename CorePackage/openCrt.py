@@ -64,7 +64,7 @@ def find_match(known_faces, names, face):
             return names[count]
         count += 1
     # Return not found if no match found
-    return 'Not Found'
+    return "unknown"
 
 
 # Get path to all the known images
@@ -100,7 +100,9 @@ while True:
             continue
         encoding = encs[0]
         match = find_match(known_encodings, encodings_names, encoding)
-        cv2.putText(frame, match[:-5], (x1, y1), fontScale=0.7, color=(255, 255, 255), lineType=3,
+        if match == "unknown":
+            match = "unknown.data"
+        cv2.putText(frame, match[:-5], (x1, y1), fontScale=0.5, color=(255, 255, 255), lineType=3,
                     fontFace=cv2.FONT_HERSHEY_DUPLEX)
     # Display the resulting frame
     cv2.imshow('Video', frame)
