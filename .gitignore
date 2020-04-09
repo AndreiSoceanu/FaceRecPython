@@ -8,4 +8,8 @@
 /ConfigData/*.data
 /*.data
 /ConfigData/persons.data
+/test
+/Encodings
+/Encodings/*
+
 

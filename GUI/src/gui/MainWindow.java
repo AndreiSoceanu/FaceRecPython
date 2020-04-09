@@ -4,11 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,9 +17,15 @@ import java.util.logging.Logger;
  * @author andrei
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    String root = "../";
+    String personsPath = root + "ConfigData/persons.data";
+    String addNewPath = root + "CorePackage/newPerson.py";
+    String trainBasePath = root + "TrainBase/";
+    String encodingsPath = root + "Encodings/";
+    String openCrtPath = root + "CorePackage/openCrt.py";
+    
     Set<String> nameSet = new TreeSet<>();
-    File file = new File("../ConfigData/persons.data");
+    File file = new File(personsPath);
 
     /**
      * Creates new form MainWindow
@@ -46,7 +49,6 @@ public class MainWindow extends javax.swing.JFrame {
         openInCurrentConfigurationButton = new javax.swing.JButton();
         addNewPersonButton = new javax.swing.JButton();
         removePersonButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         listDatabaseButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         chat = new javax.swing.JTextArea();
@@ -59,6 +61,11 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         openInCurrentConfigurationButton.setText("OPEN IN CURRENT CONFIGURATION");
+        openInCurrentConfigurationButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                openInCurrentConfigurationButtonMouseClicked(evt);
+            }
+        });
 
         addNewPersonButton.setText("ADD NEW PERSON TO DATABASE");
         addNewPersonButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,8 +85,6 @@ public class MainWindow extends javax.swing.JFrame {
                 removePersonButtonMouseClicked(evt);
             }
         });
-
-        jButton1.setText("(RE) TRAIN NEURAL NETWORK");
 
         listDatabaseButton.setText("LIST DATABASE");
         listDatabaseButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -138,9 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(removeTextField))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(addNewPersonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(addNewPersonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))))
@@ -158,9 +161,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removePersonButton)
                     .addComponent(removeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(7, 7, 7)
+                .addGap(40, 40, 40)
                 .addComponent(listDatabaseButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
@@ -201,7 +202,7 @@ public class MainWindow extends javax.swing.JFrame {
             });
             fos.write(str.toString().getBytes());
             addTextField.setText("");
-            String cmd = "python ../CorePackage/newPerson.py " + name;
+            String cmd = "python " + addNewPath + " " +name;
             Process p = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ret = in.readLine();
@@ -247,9 +248,12 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         removeTextField.setText("");
-        String cmd = "rm -rf ../TrainBase/" + name;
+        String cmd1 = "rm -rf " + trainBasePath + name + ".jpg";
+        String cmd2 = "rm -rf " + encodingsPath + name + ".data";
+        
         try {
-            Process p = Runtime.getRuntime().exec(cmd);
+            Process p1 = Runtime.getRuntime().exec(cmd1);
+            Process p2 = Runtime.getRuntime().exec(cmd2);
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -261,6 +265,15 @@ public class MainWindow extends javax.swing.JFrame {
         list = nameSet.stream().map((name) -> name + "\n").reduce(list, String::concat);
         chat.setText(chat.getText()+list);
     }//GEN-LAST:event_listDatabaseButtonMouseClicked
+
+    private void openInCurrentConfigurationButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openInCurrentConfigurationButtonMouseClicked
+        String cmd1 = "python " + openCrtPath;
+        try {
+            Process p1 = Runtime.getRuntime().exec(cmd1);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openInCurrentConfigurationButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,7 +313,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField addTextField;
     private javax.swing.JTextArea chat;
     private javax.swing.JButton clrChat;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listDatabaseButton;
@@ -319,7 +331,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } catch (FileNotFoundException ex) {
             String msg = chat.getText();
-            msg += "\nCould not read info.data!\n";
+            msg += "\nCould not read persons.data!\n";
             chat.setText(msg);
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
