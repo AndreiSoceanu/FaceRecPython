@@ -57,6 +57,18 @@ public class MainWindow extends javax.swing.JFrame {
         reset = new javax.swing.JButton();
         addTextField = new javax.swing.JTextField();
         removeTextField = new javax.swing.JTextField();
+        claheWidth = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        filterWidth = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        filterBlur = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        filterColor = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +121,30 @@ public class MainWindow extends javax.swing.JFrame {
 
         reset.setText("RESET APPLICATION");
 
+        claheWidth.setText("4");
+
+        jLabel2.setText("CLAHE window width");
+
+        filterWidth.setText("3");
+
+        jLabel3.setText("Filter window width");
+
+        filterBlur.setText("75");
+
+        jLabel4.setText("Filter blur strength");
+
+        filterColor.setText("75");
+
+        jLabel5.setText("Filter color sigma");
+
+        jLabel6.setText("Defalut value: 4");
+
+        jLabel7.setText("Default value: 3");
+
+        jLabel8.setText("Default value: 75");
+
+        jLabel9.setText("Default value: 75");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,34 +155,53 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addNewPersonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(removePersonButton)
+                                        .addComponent(jLabel2)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3)))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(removeTextField)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(filterColor, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                                            .addComponent(filterBlur)
+                                            .addComponent(filterWidth)
+                                            .addComponent(claheWidth))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel9))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(listDatabaseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(clrChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reset)
-                        .addGap(88, 88, 88))
+                        .addGap(91, 91, 91))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(listDatabaseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(openInCurrentConfigurationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(openInCurrentConfigurationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(156, 156, 156)
                                 .addComponent(jLabel1)))
-                        .addGap(162, 162, 162))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(removePersonButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeTextField))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addNewPersonButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(30, 30, 30))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +216,27 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removePersonButton)
                     .addComponent(removeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(claheWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterBlur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(listDatabaseButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
@@ -171,7 +246,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clrChat)
                     .addComponent(reset))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -202,12 +277,27 @@ public class MainWindow extends javax.swing.JFrame {
             });
             fos.write(str.toString().getBytes());
             addTextField.setText("");
-            String cmd = "python " + addNewPath + " " +name;
+            int cw, fw, fb, fs;
+            try{
+                cw = Integer.parseInt(claheWidth.getText());
+                fw = Integer.parseInt(filterWidth.getText());
+                fb = Integer.parseInt(filterBlur.getText());
+                fs = Integer.parseInt(filterColor.getText());
+            }
+            catch(NumberFormatException e){
+                chat.setText(chat.getText() + "Invalid numerical parametters!\n");
+                return;
+            }
+            String cmd = "python " + addNewPath + " " + name + " " + cw + " " + fw + " " + fb + " " + fs;
+            
             Process p = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String ret = in.readLine();
             if (ret.equalsIgnoreCase("Done")) {
                 this.chat.setText(this.chat.getText() + "Added " + name + " in the database.\n");
+            }
+            else {
+                nameSet.remove(name);
             }
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,7 +357,19 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_listDatabaseButtonMouseClicked
 
     private void openInCurrentConfigurationButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openInCurrentConfigurationButtonMouseClicked
-        String cmd1 = "python " + openCrtPath;
+        int cw, fw, fb, fs;
+        try{
+            cw = Integer.parseInt(claheWidth.getText());
+            fw = Integer.parseInt(filterWidth.getText());
+            fb = Integer.parseInt(filterBlur.getText());
+            fs = Integer.parseInt(filterColor.getText());
+        }
+        catch(NumberFormatException e){
+            chat.setText(chat.getText() + "Invalid numerical parametters!\n");
+            return;
+        }
+        
+        String cmd1 = "python " + openCrtPath + " " + cw + " " + fw + " " + fb + " " + fs;
         try {
             Process p1 = Runtime.getRuntime().exec(cmd1);
         } catch (IOException ex) {
@@ -312,8 +414,20 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton addNewPersonButton;
     private javax.swing.JTextField addTextField;
     private javax.swing.JTextArea chat;
+    private javax.swing.JTextField claheWidth;
     private javax.swing.JButton clrChat;
+    private javax.swing.JTextField filterBlur;
+    private javax.swing.JTextField filterColor;
+    private javax.swing.JTextField filterWidth;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listDatabaseButton;
     private javax.swing.JButton openInCurrentConfigurationButton;
