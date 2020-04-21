@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -120,6 +121,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         reset.setText("RESET APPLICATION");
+        reset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetMouseClicked(evt);
+            }
+        });
 
         claheWidth.setText("4");
 
@@ -313,41 +319,44 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addNewPersonButtonActionPerformed
 
     private void removePersonButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removePersonButtonMouseClicked
-        String name = this.removeTextField.getText().replaceAll(" ", "");
-        if(name.equals("")) return;
-        if (!nameSet.contains(name)) {
-            chat.setText(chat.getText() + "Label "+name + " does not exist. Nothing removed.\n");
-            this.removeTextField.setText("");
-            return;
-        }
-        
-        nameSet.remove(name);
-        int size = nameSet.size();
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            StringBuilder str = new StringBuilder();
-            str.append(Integer.toString(size));
-            str.append('\n');
-            nameSet.stream().map((x) -> {
-                str.append(x);
-                return x;
-            }).forEachOrdered((_item) -> {
+        String[] names = removeTextField.getText().split(",");
+        for (String name : names) {
+            name = name.replaceAll(" ", "");
+            if (name.equals("")) {
+                continue;
+            }
+            if (!nameSet.contains(name)) {
+                chat.setText(chat.getText() + "Label " + name + " does not exist.\n");
+                this.removeTextField.setText("");
+                continue;
+            }
+
+            nameSet.remove(name);
+            int size = nameSet.size();
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                StringBuilder str = new StringBuilder();
+                str.append(Integer.toString(size));
                 str.append('\n');
-            });
-            fos.write(str.toString().getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                nameSet.stream().map((x) -> {
+                    str.append(x);
+                    return x;
+                }).forEachOrdered((_item) -> {
+                    str.append('\n');
+                });
+                fos.write(str.toString().getBytes());
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            removeTextField.setText("");
+            String cmd2 = "rm -rf " + encodingsPath + name + ".data";
+
+            try {
+                Process p2 = Runtime.getRuntime().exec(cmd2);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            chat.setText(chat.getText() + "Removed " + name + " from database.\n");
         }
-        removeTextField.setText("");
-        String cmd1 = "rm -rf " + trainBasePath + name + ".jpg";
-        String cmd2 = "rm -rf " + encodingsPath + name + ".data";
-        
-        try {
-            Process p1 = Runtime.getRuntime().exec(cmd1);
-            Process p2 = Runtime.getRuntime().exec(cmd2);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        chat.setText(chat.getText()+"Removed " + name + " from database.\n");
     }//GEN-LAST:event_removePersonButtonMouseClicked
 
     private void listDatabaseButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDatabaseButtonMouseClicked
@@ -376,6 +385,33 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_openInCurrentConfigurationButtonMouseClicked
+
+    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
+        while (!nameSet.isEmpty()) {
+            String name = Collections.min(nameSet);
+            nameSet.remove(name);
+            String cmd2 = "rm -rf " + encodingsPath + name + ".data";
+            try {
+                Process p2 = Runtime.getRuntime().exec(cmd2);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            chat.setText(chat.getText() + "Removed " + name + " from database.\n");
+        }
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+                StringBuilder str = new StringBuilder();
+                str.append(Integer.toString(0));
+                str.append('\n');
+                fos.write(str.toString().getBytes());
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        this.claheWidth.setText("4");
+        filterWidth.setText("3");
+        filterBlur.setText("75");
+        filterColor.setText("75");
+        chat.setText(chat.getText() + "Database is empty. All values restored to default.\n");
+    }//GEN-LAST:event_resetMouseClicked
 
     /**
      * @param args the command line arguments

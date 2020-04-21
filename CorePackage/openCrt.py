@@ -19,6 +19,7 @@ video_capture.set(cv2.CAP_PROP_FPS, 60)
 face_detector = dlib.get_frontal_face_detector()
 shape_predictor = dlib.shape_predictor('../ConfigData/shape_predictor_68_face_landmarks.dat')
 face_recognition_model = dlib.face_recognition_model_v1('../ConfigData/dlib_face_recognition_resnet_model_v1.dat')
+clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(cw, cw))
 
 # TOLERANCE should be around 0.5 - 0.6
 TOLERANCE = 0.6
@@ -62,7 +63,7 @@ while True:
 
     lab = cv2.cvtColor(frame, cv2.COLOR_RGB2LAB)
     lab_planes = cv2.split(lab)
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(cw, cw))
+
     lab_planes[0] = clahe.apply(lab_planes[0])
     lab = cv2.merge(lab_planes)
     frame = cv2.cvtColor(lab, cv2.COLOR_LAB2RGB)
